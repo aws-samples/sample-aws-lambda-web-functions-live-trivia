@@ -521,6 +521,15 @@ test('publication workflow uses bounded, credential-free jobs with immutable act
   assert.equal(workflow.jobs.scanners.steps[0].with['fetch-depth'], 0);
 });
 
+test('Terraform provider lock supports local macOS and GitHub Linux runners', async () => {
+  const lock = await readFile(join(root, 'infra/terraform/.terraform.lock.hcl'), 'utf8');
+  const packageHashes = lock.match(/"h1:[^"]+"/g) ?? [];
+  assert.ok(
+    packageHashes.length >= 2,
+    'Regenerate the provider lock for darwin_arm64 and linux_amd64',
+  );
+});
+
 test('tracked snapshots preserve filenames and omit untracked and ignored files', async () => {
   const { trackedSnapshot } = await import('./run-publication-scans.mjs');
   const fixture = await mkdtemp(join(tmpdir(), 'publication-input-test-'));
