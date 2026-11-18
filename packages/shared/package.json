@@ -1,0 +1,27 @@
+{
+  "name": "@serverlessq/shared",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared domain types, scoring logic, config, and DynamoDB repositories for ServerlessQ",
+  "license": "MIT-0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.700.0",
+    "@aws-sdk/lib-dynamodb": "^3.700.0",
+    "uuid": "^11.0.0"
+  }
+}

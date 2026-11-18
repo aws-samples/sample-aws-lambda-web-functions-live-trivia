@@ -1,0 +1,25 @@
+{
+  "name": "@serverlessq/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "ServerlessQ API — Express + SSE on Lambda Web Functions (runtime type-stripped)",
+  "license": "MIT-0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "@serverlessq/shared": "*",
+    "aws-jwt-verify": "^5.2.1",
+    "cors": "^2.8.5",
+    "express": "^5.0.0",
+    "pino": "^9.5.0",
+    "zod": "^4.6.6"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0"
+  }
+}

@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Packaging artifacts
+function.zip
+*.zip
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+# Saved plans embed resolved variable values, so committing one would leak any
+# sensitive value passed through a variable. They are also
+# stale the moment the state moves.
+tfplan
+*.tfplan
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Editor / OS
+.DS_Store
+*.log
+
+# Vite
+packages/web/dist/
+
+# Publication-tool outputs (install tools outside this source tree).
+.scanner-reports/
+.lycheecache
+__pycache__/
+
+/additional-notes/
+/presentation/
+
+# Local agent permissions and working plans; shared skills remain versioned.
+/.kiro/agents/
+/docs/superpowers/

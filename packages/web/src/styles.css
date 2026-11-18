@@ -1,0 +1,993 @@
+/*
+ * Palette tokens. Every custom surface below reads these, never a literal
+ * color, so the next-themes class on <html> retargets the whole app. `:root`
+ * carries the dark set — it matches `defaultTheme="dark"` in main.tsx and is
+ * the pre-hydration fallback. `html.light` overrides it; the extra `html`
+ * beats `:root` on specificity so source order is not load-bearing.
+ */
+:root {
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  color-scheme: dark;
+
+  /* Brand accents — identical in both modes. */
+  --orange: #ff8a1f;
+  --orange-bright: #ffb454;
+  --cyan: #3be0d0;
+
+  /* Accent used as TEXT, which needs contrast against the page. */
+  --accent-text: #ffb454;
+  --accent-strong: #ffc46b;
+
+  /* Text */
+  --ink: #f8fafc;
+  --subtle: #cbd5e1;
+  --muted: #94a3b8;
+  --faint: #64748b;
+  --error-fg: #fca5a5;
+
+  /* Page */
+  --page-bg: #070b18;
+  --page-glow-warm: rgba(255, 138, 31, 0.13);
+  --page-glow-cool: rgba(59, 224, 208, 0.1);
+  --grid-line: rgba(255, 255, 255, 0.016);
+
+  /* Header */
+  --header-bg: rgba(7, 11, 24, 0.76);
+  --header-border: rgba(148, 163, 184, 0.12);
+
+  /* Panels */
+  --panel: rgba(14, 22, 42, 0.78);
+  --panel-raised: rgba(18, 28, 52, 0.92);
+  --panel-border: rgba(148, 163, 184, 0.16);
+  --panel-shadow: rgba(0, 0, 0, 0.24);
+  --panel-inset: rgba(255, 255, 255, 0.04);
+
+  /* Nav */
+  --nav-fg: #94a3b8;
+  --nav-active-fg: #f8fafc;
+  --nav-hover-bg: rgba(255, 255, 255, 0.07);
+
+  /* Form controls */
+  --input-bg: rgba(5, 9, 20, 0.58);
+  --input-border: rgba(148, 163, 184, 0.24);
+  --input-fg: #e2e8f0;
+
+  /* Hairlines, tiles, chips */
+  --hairline: rgba(148, 163, 184, 0.1);
+  --dashed-border: rgba(148, 163, 184, 0.18);
+  --tile-bg: rgba(5, 9, 20, 0.32);
+  --tile-border: rgba(148, 163, 184, 0.12);
+  --chip-bg: rgba(148, 163, 184, 0.1);
+  --chip-fg: #94a3b8;
+
+  /* Countdown dial */
+  --countdown-track: rgba(148, 163, 184, 0.14);
+  --countdown-inner-bg: #0b1122;
+
+  /* Headline gradient + live indicator */
+  --grad-start: #ffb454;
+  --grad-mid: #ff8a1f;
+  --grad-end: #ff5c73;
+  --live: #4ade80;
+  --drop-shadow: rgba(0, 0, 0, 0.32);
+
+  /* Region / endpoint pills */
+  --pill-fg: #74eadf;
+  --pill-bg: rgba(59, 224, 208, 0.07);
+  --pill-border: rgba(59, 224, 208, 0.2);
+}
+
+html.light {
+  color-scheme: light;
+
+  --accent-text: #c2410c;
+  --accent-strong: #b45309;
+
+  --ink: #0f172a;
+  --subtle: #334155;
+  --muted: #64748b;
+  --faint: #576375;
+  --error-fg: #b91c1c;
+
+  --page-bg: #f5f7fb;
+  --page-glow-warm: rgba(255, 138, 31, 0.14);
+  --page-glow-cool: rgba(59, 224, 208, 0.16);
+  --grid-line: rgba(15, 23, 42, 0.035);
+
+  --header-bg: rgba(255, 255, 255, 0.82);
+  --header-border: rgba(15, 23, 42, 0.09);
+
+  --panel: rgba(255, 255, 255, 0.9);
+  --panel-raised: rgba(255, 255, 255, 0.97);
+  --panel-border: rgba(15, 23, 42, 0.1);
+  --panel-shadow: rgba(15, 23, 42, 0.09);
+  --panel-inset: rgba(255, 255, 255, 0.7);
+
+  --nav-fg: #475569;
+  --nav-active-fg: #0f172a;
+  --nav-hover-bg: rgba(15, 23, 42, 0.06);
+
+  --input-bg: #fff;
+  --input-border: rgba(15, 23, 42, 0.18);
+  --input-fg: #0f172a;
+
+  --hairline: rgba(15, 23, 42, 0.09);
+  --dashed-border: rgba(15, 23, 42, 0.15);
+  --tile-bg: rgba(15, 23, 42, 0.03);
+  --tile-border: rgba(15, 23, 42, 0.09);
+  --chip-bg: rgba(15, 23, 42, 0.07);
+  --chip-fg: #475569;
+
+  --countdown-track: rgba(15, 23, 42, 0.1);
+  --countdown-inner-bg: #fff;
+
+  /* Deeper stops: #ffb454 lands ~1.8:1 on a light page. */
+  --grad-start: #ea580c;
+  --grad-mid: #dc2626;
+  --grad-end: #be123c;
+  --live: #15803d;
+  --drop-shadow: rgba(15, 23, 42, 0.14);
+
+  --pill-fg: #0f766e;
+  --pill-bg: rgba(13, 148, 136, 0.08);
+  --pill-border: rgba(13, 148, 136, 0.26);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: var(--page-bg);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  /* 100vh on iOS/Android measures the viewport with the URL bar collapsed, which
+     overshoots and shifts the page as the bar hides. dvh tracks the real box;
+     vh stays as the fallback for older mobile browsers. */
+  min-height: 100vh;
+  min-height: 100dvh;
+  background:
+    radial-gradient(circle at 15% 5%, var(--page-glow-warm), transparent 27rem),
+    radial-gradient(circle at 88% 24%, var(--page-glow-cool), transparent 30rem), var(--page-bg);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.app-shell {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+
+.site-header {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  border-bottom: 1px solid var(--header-border);
+  background: var(--header-bg);
+  backdrop-filter: blur(18px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand > span:last-child {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brand strong {
+  font-size: 1.03rem;
+  letter-spacing: -0.03em;
+}
+
+.brand small {
+  margin-top: 0.3rem;
+  color: var(--accent-text);
+  font-size: 0.57rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.brand-mark {
+  display: block;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 0.7rem 0.7rem 0.7rem 0.15rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(255, 138, 31, 0.25);
+}
+
+.primary-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.nav-link {
+  border-radius: 0.65rem;
+  color: var(--nav-fg);
+  padding: 0.55rem 0.7rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: 160ms ease;
+}
+
+.nav-link:hover,
+.nav-link.is-active {
+  background: var(--nav-hover-bg);
+  color: var(--nav-active-fg);
+}
+
+.theme-toggle {
+  border: 1px solid var(--input-border) !important;
+}
+
+.hero-grid {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid::after {
+  position: absolute;
+  z-index: -1;
+  top: 4rem;
+  right: -9rem;
+  width: 24rem;
+  height: 24rem;
+  border: 1px solid rgba(255, 138, 31, 0.24);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 3.5rem rgba(255, 138, 31, 0.025),
+    0 0 0 7rem rgba(255, 138, 31, 0.018);
+  content: '';
+}
+
+.glass-panel {
+  border: 1px solid var(--panel-border);
+  border-radius: 1.35rem;
+  background: linear-gradient(145deg, var(--panel-raised), var(--panel));
+  box-shadow:
+    0 1.5rem 4rem var(--panel-shadow),
+    inset 0 1px var(--panel-inset);
+  backdrop-filter: blur(12px);
+}
+
+.join-card,
+.question-card,
+.leaderboard-card,
+.admin-card,
+.lobby-card {
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.host-panel {
+  padding: clamp(1.5rem, 3.5vw, 2.75rem);
+}
+
+.eyebrow {
+  color: var(--accent-text);
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.16em;
+}
+
+.gradient-text {
+  background: linear-gradient(100deg, var(--grad-start), var(--grad-mid), var(--grad-end));
+  background-clip: text;
+  color: transparent;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: var(--subtle);
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+}
+
+.text-input,
+.native-select {
+  border-color: var(--input-border) !important;
+  background: var(--input-bg) !important;
+}
+
+.text-input:focus,
+.native-select:focus {
+  border-color: var(--orange) !important;
+  box-shadow: 0 0 0 1px var(--orange) !important;
+  outline: none;
+}
+
+.native-select {
+  min-width: 12rem;
+  height: 2.5rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+  color: var(--input-fg);
+  padding: 0 0.7rem;
+}
+
+.primary-cta {
+  box-shadow: 0 0.7rem 1.8rem rgba(255, 138, 31, 0.2);
+}
+
+.answer-choice {
+  justify-content: flex-start !important;
+  min-height: 3.4rem !important;
+  white-space: normal !important;
+}
+
+.choice-key {
+  display: inline-grid;
+  width: 1.85rem;
+  height: 1.85rem;
+  flex: 0 0 1.85rem;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  opacity: 0.72;
+}
+
+.countdown {
+  display: grid;
+  width: 4.5rem;
+  height: 4.5rem;
+  flex: 0 0 4.5rem;
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(var(--orange) var(--countdown-progress), var(--countdown-track) 0);
+  box-shadow: 0 0 1.5rem rgba(255, 138, 31, 0.15);
+}
+
+.countdown-inner {
+  display: flex;
+  width: 3.72rem;
+  height: 3.72rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--countdown-inner-bg);
+  flex-direction: column;
+}
+
+.countdown-inner strong {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.countdown-inner span {
+  margin-top: 0.15rem;
+  color: var(--muted);
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.live-badge {
+  gap: 0.35rem;
+}
+
+.live-dot {
+  display: inline-block;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: var(--live);
+  box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.5);
+  animation: pulse 1.8s infinite;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 0.85rem 0.7rem;
+  border-bottom: 1px solid var(--hairline);
+  text-align: left;
+}
+
+.leaderboard-table th {
+  color: var(--faint);
+  font-size: 0.64rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.leaderboard-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.leaderboard-table .numeric {
+  text-align: right;
+}
+
+.points-cell {
+  color: var(--accent-text);
+  font-weight: 800;
+}
+
+.rank {
+  display: inline-grid;
+  width: 1.7rem;
+  height: 1.7rem;
+  place-items: center;
+  border-radius: 0.48rem;
+  background: var(--chip-bg);
+  color: var(--chip-fg);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.rank-1 {
+  background: rgba(255, 180, 84, 0.16);
+  color: var(--accent-strong);
+}
+
+.region-pill,
+.endpoint-label {
+  max-width: 28rem;
+  overflow: hidden;
+  border: 1px solid var(--pill-border);
+  border-radius: 999px;
+  background: var(--pill-bg);
+  color: var(--pill-fg);
+  padding: 0.35rem 0.65rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.67rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.question-list-item,
+.metric-tile {
+  border: 1px solid var(--tile-border);
+  border-radius: 0.85rem;
+  background: var(--tile-bg);
+  padding: 0.9rem;
+}
+
+.question-number {
+  display: inline-grid;
+  width: 1.7rem;
+  height: 1.7rem;
+  flex: 0 0 1.7rem;
+  place-items: center;
+  border-radius: 0.5rem;
+  background: rgba(255, 138, 31, 0.12);
+  color: var(--accent-text);
+  font-size: 0.68rem;
+  font-weight: 850;
+}
+
+.metric-value {
+  color: var(--ink);
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: 850;
+  letter-spacing: -0.04em;
+}
+
+.pulse-orb {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: var(--live);
+  box-shadow: 0 0 1rem var(--live);
+  animation: pulse 1.8s infinite;
+}
+
+.site-footer {
+  border-top: 1px solid var(--hairline);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(0.82);
+  }
+}
+
+/* Phone breakpoint aligned to Chakra's `md` (48em), so the CSS and the `base`/`md`
+   props in the components switch at the same width instead of disagreeing
+   between 680px and 768px. */
+@media (max-width: 47.99em) {
+  /* Nav stays reachable: shrink and allow horizontal scroll rather than hiding
+     the inactive links, which previously left phone users with no way to leave
+     the current page. */
+  .primary-nav {
+    max-width: 100%;
+    overflow-x: auto;
+    gap: 0.1rem;
+    scrollbar-width: none;
+  }
+
+  .primary-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-link {
+    padding: 0.5rem 0.45rem;
+    font-size: 0.76rem;
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+.loading-panel {
+  display: flex;
+  min-height: 14rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.empty-state {
+  border: 1px dashed var(--dashed-border);
+  border-radius: 0.9rem;
+  background: var(--tile-bg);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.large-empty-state {
+  padding: clamp(2rem, 6vw, 4.5rem);
+}
+
+.question-empty {
+  margin-top: 2rem;
+  padding-block: 3rem;
+}
+
+.form-error {
+  margin-top: 0.75rem;
+  color: var(--error-fg);
+  font-size: 0.82rem;
+}
+
+.admin-toolbar {
+  padding: 1rem;
+}
+
+.admin-games-table {
+  min-width: 48rem;
+  font-size: 0.85rem;
+}
+
+.admin-games-table tbody tr {
+  cursor: pointer;
+}
+
+.admin-games-table tbody tr:hover,
+.admin-games-table tbody tr:focus-within {
+  background: var(--nav-hover-bg);
+}
+
+.admin-games-table tbody tr.is-selected {
+  background: var(--chip-bg);
+  box-shadow: inset 3px 0 var(--orange);
+}
+
+.admin-games-table input[type='radio'] {
+  accent-color: var(--orange);
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.admin-games-table input[type='radio']:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+
+.admin-games-table th:first-child,
+.admin-games-table td:first-child {
+  width: 4rem;
+  text-align: center;
+}
+
+.admin-games-table td:last-child {
+  white-space: nowrap;
+  color: var(--muted);
+}
+
+.wide-select {
+  width: 100%;
+}
+
+.player-list-item {
+  border-bottom: 1px solid var(--hairline);
+  padding: 0.65rem 0;
+}
+
+.player-list-item:last-child {
+  border-bottom: 0;
+}
+
+/* ── Public game directory (/) ────────────────────────────────────────────── */
+
+.game-row-link {
+  display: block;
+  border-radius: 1.35rem;
+  text-decoration: none;
+}
+
+.game-row-link:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+
+.game-row {
+  padding: 1.1rem 1.35rem;
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.game-row-link:hover .game-row {
+  transform: translateY(-2px);
+  border-color: var(--accent-text);
+}
+
+.game-row.is-ended {
+  opacity: 0.62;
+}
+
+.game-row-players {
+  color: var(--ink);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.game-row-id {
+  margin-top: 0.15rem;
+  color: var(--faint);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.74rem;
+}
+
+.game-row-cta {
+  color: var(--accent-text);
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-row,
+  .game-row-link:hover .game-row {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Join QR + lobby counters ────────────────────────────────────────────── */
+
+/*
+ * The QR keeps a white plate in BOTH color modes — the code itself is not
+ * themed (see JoinQr.tsx), so a themed plate would leave a floating white
+ * square. The plate doubles as the outer quiet zone.
+ */
+.qr-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.qr-frame {
+  width: 100%;
+  max-width: 34rem;
+  border-radius: 1.35rem;
+  background: #fff;
+  padding: clamp(0.75rem, 2vw, 1.25rem);
+  box-shadow:
+    0 1.5rem 4rem var(--panel-shadow),
+    0 0 0 1px var(--panel-border);
+}
+
+.qr-url {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  color: var(--subtle);
+  font-size: clamp(0.82rem, 1.6vw, 1.05rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.host-qr-column {
+  display: flex;
+  justify-content: center;
+}
+
+/*
+ * Read-from-the-back-of-the-room sizing. `clamp` against vw rather than a fixed
+ * size so the same screen works on a laptop preview and a projector.
+ */
+.host-count-value {
+  color: var(--ink);
+  font-size: clamp(3.5rem, 11vw, 8.5rem);
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.host-count-label {
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: clamp(0.85rem, 1.8vw, 1.15rem);
+  font-weight: 750;
+  letter-spacing: 0.02em;
+}
+
+.lobby-count {
+  border: 1px solid var(--tile-border);
+  border-radius: 0.95rem;
+  background: var(--tile-bg);
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.lobby-count-value {
+  color: var(--ink);
+  font-size: clamp(2.5rem, 9vw, 4rem);
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.lobby-count-label {
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 750;
+}
+
+/*
+ * The standings on the projected host screen are read from the back of the room,
+ * so the shared LeaderboardTable gets scaled up here rather than being forked
+ * into a second component.
+ */
+.host-standings .leaderboard-table th,
+.host-standings .leaderboard-table td {
+  padding: 1rem 0.8rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.35rem);
+}
+
+.host-standings .leaderboard-table th {
+  font-size: clamp(0.7rem, 1vw, 0.9rem);
+}
+
+.host-standings .points-cell {
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * ── Projected question board (/host/:gameId while a round is on screen) ───────
+ *
+ * Everything here is sized with `clamp` against vw, not fixed px: the same markup
+ * has to be legible from the back of a breakout room and still fit a laptop
+ * preview while the host prepares a game.
+ */
+.question-stage {
+  padding: clamp(1.5rem, 3.5vw, 3rem);
+}
+
+.stage-question {
+  font-size: clamp(1.6rem, 3.6vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.stage-choice {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.7rem, 1.4vw, 1.1rem);
+  border: 1px solid var(--tile-border);
+  border-radius: 1rem;
+  background: var(--tile-bg);
+  padding: clamp(0.9rem, 1.8vw, 1.4rem) clamp(1rem, 2vw, 1.5rem);
+  /* The reveal is a background/border swap, so it must not also reflow the grid. */
+  transition:
+    background 220ms ease,
+    border-color 220ms ease;
+}
+
+.stage-choice-key {
+  display: inline-grid;
+  width: clamp(2rem, 3vw, 2.9rem);
+  height: clamp(2rem, 3vw, 2.9rem);
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid var(--dashed-border);
+  border-radius: 0.65rem;
+  color: var(--muted);
+  font-size: clamp(0.85rem, 1.4vw, 1.25rem);
+  font-weight: 850;
+}
+
+.stage-choice-text {
+  color: var(--ink);
+  font-size: clamp(1rem, 2vw, 1.85rem);
+  font-weight: 700;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.stage-choice-tick {
+  margin-left: auto;
+  color: var(--live);
+  font-size: clamp(1.1rem, 2vw, 1.8rem);
+  font-weight: 900;
+}
+
+/*
+ * The correct answer. Colour alone would fail anyone colour-blind at 20 metres,
+ * so the highlight also carries the ✓ glyph and a heavier border.
+ */
+.stage-choice.is-correct {
+  border-color: var(--live);
+  background: rgba(74, 222, 128, 0.14);
+  box-shadow: inset 0 0 0 1px var(--live);
+}
+
+.stage-choice.is-correct .stage-choice-key {
+  border-color: var(--live);
+  color: var(--live);
+}
+
+.stage-note {
+  color: var(--muted);
+  font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+  font-weight: 700;
+}
+
+.countdown-xl {
+  width: clamp(5.5rem, 10vw, 9rem);
+  height: clamp(5.5rem, 10vw, 9rem);
+  flex: 0 0 auto;
+}
+
+.countdown-xl .countdown-inner {
+  width: 82%;
+  height: 82%;
+}
+
+.countdown-xl .countdown-inner strong {
+  font-size: clamp(1.9rem, 4vw, 3.4rem);
+}
+
+.countdown-xl .countdown-inner span {
+  font-size: clamp(0.5rem, 0.9vw, 0.8rem);
+}
+
+/* Late-joiner rail beside the question: fixed-ish on wide screens, full width when stacked. */
+.host-rail {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 80rem) {
+  .host-rail {
+    width: 22rem;
+  }
+}
+
+.host-rail-card {
+  padding: clamp(1.1rem, 2vw, 1.6rem);
+  text-align: center;
+}
+
+.host-count-value-sm {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+}
+
+/* ── Top-3 strip under the question ──────────────────────────────────────────── */
+.top-scorers {
+  padding: clamp(1rem, 2vw, 1.6rem) clamp(1.1rem, 2.2vw, 1.9rem);
+}
+
+.top-scorers-row {
+  display: grid;
+  gap: clamp(0.6rem, 1.4vw, 1.1rem);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 48rem) {
+  .top-scorers-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.top-scorer {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: clamp(0.6rem, 1.2vw, 1rem);
+  border: 1px solid var(--tile-border);
+  border-radius: 0.95rem;
+  background: var(--tile-bg);
+  padding: clamp(0.7rem, 1.4vw, 1.1rem);
+}
+
+.top-scorer.place-1 {
+  border-color: rgba(255, 180, 84, 0.45);
+  background: rgba(255, 180, 84, 0.1);
+}
+
+.top-scorer-medal {
+  font-size: clamp(1.4rem, 2.6vw, 2.25rem);
+  line-height: 1;
+}
+
+.top-scorer-name {
+  overflow: hidden;
+  color: var(--ink);
+  font-size: clamp(1rem, 1.8vw, 1.6rem);
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.top-scorer-meta {
+  color: var(--accent-text);
+  font-size: clamp(0.8rem, 1.3vw, 1.15rem);
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * FINISHED host screen. No QR column to balance against, so the panel centres
+ * itself and the final standings take the full width underneath.
+ */
+.host-final {
+  margin-inline: auto;
+  max-width: 48rem;
+  text-align: center;
+}
