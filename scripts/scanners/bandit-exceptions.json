@@ -1,0 +1,14 @@
+[
+  {
+    "file": "scripts/environment.test.py",
+    "line": 8,
+    "check_id": "B404",
+    "rationale": "Test-only harness imports subprocess to run fixed local scripts against fake CLIs."
+  },
+  {
+    "file": "scripts/environment.test.py",
+    "line": 313,
+    "check_id": "B603",
+    "rationale": "Test-only harness executes a fixed Bash path and argument array with shell disabled."
+  }
+]

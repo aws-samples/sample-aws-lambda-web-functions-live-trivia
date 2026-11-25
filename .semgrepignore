@@ -1,0 +1,2 @@
+# Scan all tracked JavaScript/TypeScript, including test fixtures.
+# The runner creates a tracked-only snapshot; no directory exclusions apply.

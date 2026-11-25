@@ -1,0 +1,42 @@
+{
+  "name": "serverlessq-live-trivia",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "ServerlessQ — live audience trivia on AWS Lambda Web Functions",
+  "license": "MIT-0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "check:node": "node scripts/check-node-version.mjs",
+    "preinstall": "node scripts/check-node-version.mjs",
+    "build": "npm run check:node && tsc --build",
+    "typecheck": "npm run check:node && tsc --build --force",
+    "clean": "tsc --build --clean",
+    "test": "npm run check:node && vitest run --project unit",
+    "test:watch": "npm run check:node && vitest",
+    "test:integration": "npm run check:node && vitest run --project integration",
+    "test:all": "npm run check:node && vitest run",
+    "test:scripts": "npm run check:node && node --test scripts/*.test.mjs && python3 scripts/environment.test.py && bash scripts/deploy-multiregion.test.sh && bash scripts/per-region-ddb.test.sh && bash infra/terraform/tests/no-legacy-active-tf.test.sh",
+    "lint": "npm run check:node && eslint .",
+    "check:terraform": "node scripts/check-terraform.mjs",
+    "scan:local": "node scripts/run-publication-scans.mjs local --offline",
+    "format": "prettier --write .",
+    "seed": "node scripts/seed.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/node": "^24.0.0",
+    "eslint": "^9.17.0",
+    "js-yaml": "4.3.2",
+    "fast-check": "^3.23.0",
+    "prettier": "^3.4.0",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.73.0",
+    "vitest": "^4.1.12"
+  }
+}

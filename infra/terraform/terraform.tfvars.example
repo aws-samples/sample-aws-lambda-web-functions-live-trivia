@@ -1,0 +1,18 @@
+# Copy to terraform.tfvars and adjust. terraform.tfvars is gitignored.
+# Select an independent copy with `export TRIVIA_ENV_NAME=dev`, then use
+# scripts/terraform.sh init/apply. Resource names come from that workspace.
+
+# primary_region holds the tables and administrator Cognito pool and is
+# published to the functions as DDB_REGION and COGNITO_REGION.
+primary_region = "us-east-1"
+
+# Extra regions the FUNCTIONS may serve from, for a Lambda MultiRegion endpoint.
+# Replicates nothing: sandboxes there reach back to primary_region. Empty means
+# HomeRegion-only, which is the current scope.
+replica_regions = []
+
+# Use "dev-" to isolate development tables. Leave "" for unprefixed tables.
+# This setting applies only to the default-workspace deployment.
+table_prefix = "dev-"
+
+# enable_ttl = true

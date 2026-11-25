@@ -1,0 +1,62 @@
+[
+  {
+    "check_id": "CKV_AWS_18",
+    "resource": "aws_s3_bucket.code",
+    "file": "s3.tf",
+    "rationale": "Private rebuildable deployment ZIPs; S3 server access logging is not provisioned."
+  },
+  {
+    "check_id": "CKV_AWS_144",
+    "resource": "aws_s3_bucket.code",
+    "file": "s3.tf",
+    "rationale": "Rebuildable deployment ZIPs in one private region do not require cross-region replication."
+  },
+  {
+    "check_id": "CKV2_AWS_62",
+    "resource": "aws_s3_bucket.code",
+    "file": "s3.tf",
+    "rationale": "No application consumer depends on deployment-artifact upload event notifications."
+  },
+  {
+    "check_id": "CKV_AWS_145",
+    "resource": "aws_s3_bucket.code",
+    "file": "s3.tf",
+    "rationale": "Rebuildable ZIPs use S3-managed default encryption; this artifact bucket does not require KMS-by-default."
+  },
+  {
+    "check_id": "CKV_AWS_119",
+    "resource": "aws_dynamodb_table.question_sets",
+    "file": "dynamodb.tf",
+    "rationale": "Educational trivia sample retains DynamoDB AWS-owned encryption; customer-managed key control and auditing are outside its scope."
+  },
+  {
+    "check_id": "CKV_AWS_119",
+    "resource": "aws_dynamodb_table.questions",
+    "file": "dynamodb.tf",
+    "rationale": "Educational trivia sample retains DynamoDB AWS-owned encryption; customer-managed key control and auditing are outside its scope."
+  },
+  {
+    "check_id": "CKV_AWS_119",
+    "resource": "aws_dynamodb_table.games",
+    "file": "dynamodb.tf",
+    "rationale": "Educational trivia sample retains DynamoDB AWS-owned encryption; customer-managed key control and auditing are outside its scope."
+  },
+  {
+    "check_id": "CKV_AWS_119",
+    "resource": "aws_dynamodb_table.participants",
+    "file": "dynamodb.tf",
+    "rationale": "Educational trivia sample retains DynamoDB AWS-owned encryption; customer-managed key control and auditing are outside its scope."
+  },
+  {
+    "check_id": "CKV_AWS_119",
+    "resource": "aws_dynamodb_table.answers",
+    "file": "dynamodb.tf",
+    "rationale": "Educational trivia sample retains DynamoDB AWS-owned encryption; customer-managed key control and auditing are outside its scope."
+  },
+  {
+    "check_id": "CKV_AWS_119",
+    "resource": "aws_dynamodb_table.scores",
+    "file": "dynamodb.tf",
+    "rationale": "Educational trivia sample retains DynamoDB AWS-owned encryption; customer-managed key control and auditing are outside its scope."
+  }
+]
